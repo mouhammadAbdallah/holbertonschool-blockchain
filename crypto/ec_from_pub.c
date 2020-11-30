@@ -3,8 +3,6 @@
 /**
  * ec_from_pub - a function that creates an EC_KEY structure given a public key
  * @pub: the public key to be converted
- * containing both the public and private keys
- * or NULL upon failure
  *
  * Return: a pointer to the created EC_KEY structure, or NULL upon failure
  */
