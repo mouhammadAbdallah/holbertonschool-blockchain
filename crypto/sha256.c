@@ -1,23 +1,17 @@
 #include "hblk_crypto.h"
 
 /**
- * create_array - malloc
- * @size: len
- * @c: char
+ * sha256 - a function that computes the hash of a sequence of bytes
+ * @s: the sequence of bytes to be hashed
+ * @len: the number of bytes to hash in s
+ * @digest: The resulting hash must be stored in digest
  *
- * Return: pointer
+ * Return: a pointer to digest or NULL if digest happens to be NULL
  */
-int *main(unsigned int size, char c)
+uint8_t *sha256(int8_t const *s, size_t len, uint8_t digest[SHA256_DIGEST_LENGTH])
 {
-	char *arr;
-	unsigned int i;
-
-	if (size == 0)
+	if (digest == NULL)
 		return (NULL);
-	arr = (char *)malloc(sizeof(char) * size);
-	if (arr == NULL)
-		return (NULL);
-	for (i = 0; i < size; i++)
-		arr[i] = c;
-	return (arr);
+	digest = SHA256((const unsigned char *)s, len, digest);
+	return (digest);
 }
