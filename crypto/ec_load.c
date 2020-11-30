@@ -8,30 +8,37 @@
  */
 EC_KEY *ec_load(char const *folder)
 {
-	EC_KEY *ec_key;
-	char buffer[BUFSIZ];
 	FILE *fp;
+	char path[128] = {0};
+	EC_KEY *key = NULL;
 
-	if (folder == NULL)
-		return (NULL);
-	sprintf(buffer, "%s/%s", folder, PUB_FILE);
-	fp = fopen(buffer, "r");
+	if (!folder)
+		return (0);
+
+	sprintf(path, "%s/" PUB_FILE, folder);
+	fp = fopen(path, "r");
 	if (!fp)
-		return (NULL);
-	if (!PEM_read_EC_PUBKEY(fp, &ec_key, NULL, NULL))
 	{
-		fclose(fp);
-		return (NULL);
+		EC_KEY_free(key);
+		return (0);
 	}
-	sprintf(buffer, "%s/%s", folder, PRV_FILE);
-	fp = fopen(buffer, "r");
-	if (!fp)
-		return (NULL);
-	if (!PEM_read_ECPrivateKey(fp, &ec_key, NULL, NULL))
+	if (!PEM_read_EC_PUBKEY(fp, &key, NULL, NULL))
 	{
+		EC_KEY_free(key);
 		fclose(fp);
-		return (NULL);
+		return (0);
 	}
 	fclose(fp);
-	return (ec_key);
+
+	sprintf(path, "%s/" PRV_FILE, folder);
+	fp = fopen(path, "r");
+	if (!fp)
+		return (0);
+	if (!PEM_read_ECPrivateKey(fp, &key, NULL, NULL))
+	{
+		fclose(fp);
+		return (0);
+	}
+	fclose(fp);
+	return (key);
 }
