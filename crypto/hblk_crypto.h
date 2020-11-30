@@ -7,6 +7,8 @@
 #include <stdint.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <openssl/pem.h>
+
 
 #define PUB_FILE	"key_pub.pem"
 #define PRV_FILE	"key.pem"
