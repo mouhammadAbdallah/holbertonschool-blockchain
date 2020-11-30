@@ -8,7 +8,10 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <openssl/pem.h>
-
+#include <openssl/opensslconf.h>
+#include <openssl/ecdsa.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #define PUB_FILE	"key_pub.pem"
 #define PRV_FILE	"key.pem"

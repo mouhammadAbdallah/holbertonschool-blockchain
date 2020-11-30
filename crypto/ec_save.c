@@ -9,28 +9,36 @@
  */
 int ec_save(EC_KEY *key, char const *folder)
 {
-	char buf[BUFSIZ];
+	char buffer[BUFSIZ];
 	FILE *fp;
 
-	if (!key || !folder || strlen(folder) + strlen(PUB_FILE) > BUFSIZ)
+	if (!key || !folder)
 		return (0);
-	mkdir(folder, S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
-	sprintf(buf, "%s/%s", folder, PUB_FILE);
-	fp = fopen(buf, "w");
+	mkdir(folder, 0700);
+	sprintf(buffer, "%s/%s", folder, PRV_FILE);
+	fp = fopen(buffer, "w");
 	if (!fp)
 		return (0);
-	if (!PEM_write_EC_PUBKEY(fp, key))
-		goto end;
-	fclose(fp);
-	sprintf(buf, "%s/%s", folder, PRV_FILE);
-	fp = fopen(buf, "w");
-	if (!fp)
-		return (0);
+
+	/* Write Private key to PEM */
 	if (!PEM_write_ECPrivateKey(fp, key, NULL, NULL, 0, NULL, NULL))
-		goto end;
+	{
+		fclose(fp);
+		return (0);
+	}
+	fclose(fp);
+
+	sprintf(buffer, "%s/%s", folder, PUB_FILE);
+	fp = fopen(buffer, "w");
+	if (!fp)
+		return (0);
+
+	/* Write Public key to PEM */
+	if (!PEM_write_EC_PUBKEY(fp, key))
+	{
+		fclose(fp);
+		return (0);
+	}
 	fclose(fp);
 	return (1);
-end:
-	fclose(fp);
-	return (0);
 }
