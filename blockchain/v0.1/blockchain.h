@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 /*
 #include <openssl/ec.h>
@@ -85,5 +86,7 @@ typedef struct block_s
 } block_t;
 
 blockchain_t *blockchain_create(void);
+block_t *block_create(block_t const *prev, int8_t const *data,
+		      uint32_t data_len);
 
 #endif /* _BLOCKCHAIN_H_ */
