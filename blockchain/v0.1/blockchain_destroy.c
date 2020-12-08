@@ -1,7 +1,7 @@
 #include "blockchain.h"
 
 /**
- * blockchain_create - a function that deletes an existing Blockchain
+ * blockchain_destroy - a function that deletes an existing Blockchain
  * along with all the Blocks it contains
  * @blockchain: point to the Blockchain structure to delete
  *All the Blocks in the chain linked list must be destroyed
