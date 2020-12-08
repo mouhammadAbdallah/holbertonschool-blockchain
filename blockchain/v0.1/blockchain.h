@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include "../../crypto/hblk_crypto.h"
 
 /*
 #include <openssl/ec.h>
@@ -90,5 +91,6 @@ block_t *block_create(block_t const *prev, int8_t const *data,
 		      uint32_t data_len);
 void block_destroy(block_t *block);
 void blockchain_destroy(blockchain_t *blockchain);
+uint8_t *block_hash(block_t const *block, uint8_t hash_buf[SHA256_DIGEST_LENGTH]);
 
 #endif /* _BLOCKCHAIN_H_ */
