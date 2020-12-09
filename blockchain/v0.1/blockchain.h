@@ -18,6 +18,7 @@
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 #define HBLK_MAGIC "HBLK"
 #define HBLK_VERSION "0.1"
+#define CHECK_ENDIAN(x) (endianness ? SWAPENDIAN(x) : (void)0)
 
 /**
  * struct blockchain_s - Blockchain structure
@@ -93,5 +94,7 @@ void block_destroy(block_t *block);
 void blockchain_destroy(blockchain_t *blockchain);
 uint8_t *block_hash(block_t const *block, uint8_t hash_buf[SHA256_DIGEST_LENGTH]);
 int blockchain_serialize(blockchain_t const *blockchain, char const *path);
+llist_t *deserialize_blocks(int fd, uint32_t size, uint8_t endianness);
+int block_is_valid(block_t const *block, block_t const *prev_block);
 
 #endif /* _BLOCKCHAIN_H_ */
