@@ -18,6 +18,7 @@
 #define MIN(x, y) ((x) < (y) ? (x) : (y))
 #define HBLK_MAGIC "HBLK"
 #define HBLK_VERSION "0.1"
+#define CHECK_ENDIAN(x) (endianness ? SWAPENDIAN(x) : (void)0)
 
 /**
  * struct blockchain_s - Blockchain structure
