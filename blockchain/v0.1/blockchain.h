@@ -1,6 +1,10 @@
 #ifndef _BLOCKCHAIN_H_
 #define _BLOCKCHAIN_H_
 
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
 #include <openssl/sha.h>
 #include <stdint.h>
 #include <llist.h>
@@ -9,15 +13,11 @@
 #include <string.h>
 #include <time.h>
 #include "../../crypto/hblk_crypto.h"
+#include "provided/endianness.h"
 
-/*
-#include <openssl/ec.h>
-#include <openssl/obj_mac.h>
-#include <sys/stat.h>
-#include <openssl/pem.h>
-#include <openssl/opensslconf.h>
-#include <openssl/ecdsa.h>
-*/
+#define MIN(x, y) ((x) < (y) ? (x) : (y))
+#define HBLK_MAGIC "HBLK"
+#define HBLK_VERSION "0.1"
 
 /**
  * struct blockchain_s - Blockchain structure
@@ -92,5 +92,6 @@ block_t *block_create(block_t const *prev, int8_t const *data,
 void block_destroy(block_t *block);
 void blockchain_destroy(blockchain_t *blockchain);
 uint8_t *block_hash(block_t const *block, uint8_t hash_buf[SHA256_DIGEST_LENGTH]);
+int blockchain_serialize(blockchain_t const *blockchain, char const *path);
 
 #endif /* _BLOCKCHAIN_H_ */
