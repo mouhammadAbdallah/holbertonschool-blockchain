@@ -10,11 +10,12 @@ int nbOfZinB(uint8_t nb);
  *
  * Return: return 1 if the difficulty is respected, or 0 otherwise
  */
-int hash_matches_difficulty(uint8_t const hash[SHA256_DIGEST_LENGTH], uint32_t difficulty)
+int hash_matches_difficulty(uint8_t const hash[SHA256_DIGEST_LENGTH],
+			    uint32_t difficulty)
 {
 	uint32_t i = 0, j = 0;
 
-	if (!hash)
+	if (!hash || difficulty > SHA256_DIGEST_LENGTH * 8)
 		return (0);
 	while (j < difficulty && nbOfZinB(hash[i]) != 0)
 	{
@@ -29,8 +30,8 @@ int hash_matches_difficulty(uint8_t const hash[SHA256_DIGEST_LENGTH], uint32_t d
 
 /**
  * nbOfZinB - the number of left zero in a byte
- * @nb: the number to test
- * 
+ * @i: the number to test
+ *
  * Return: the number or 0 if no zeros
  */
 int nbOfZinB(uint8_t i)
