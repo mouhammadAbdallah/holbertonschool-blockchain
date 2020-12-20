@@ -11,6 +11,7 @@ This repository contains:
 
 * crypto
 * blockchain-v0.1
+* blockchain-v0.2
 
 optional projects:
 
