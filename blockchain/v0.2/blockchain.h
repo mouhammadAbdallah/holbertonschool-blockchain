@@ -20,9 +20,9 @@
 #define HBLK_VERSION "0.2"
 #define CHECK_ENDIAN(x) (endianness ? SWAPENDIAN(x) : (void)0)
 
-//Defines how often (in seconds) a Block should be found
+/*Defines how often (in seconds) a Block should be found*/
 #define BLOCK_GENERATION_INTERVAL 1
-//Defines how often (in Blocks) the difficulty should be adjusted
+/*Defines how often (in Blocks) the difficulty should be adjusted-*/
 #define DIFFICULTY_ADJUSTMENT_INTERVAL 5
 
 /**
@@ -97,12 +97,14 @@ block_t *block_create(block_t const *prev, int8_t const *data,
 		      uint32_t data_len);
 void block_destroy(block_t *block);
 void blockchain_destroy(blockchain_t *blockchain);
-uint8_t *block_hash(block_t const *block, uint8_t hash_buf[SHA256_DIGEST_LENGTH]);
+uint8_t *block_hash(block_t const *block,
+		    uint8_t hash_buf[SHA256_DIGEST_LENGTH]);
 int blockchain_serialize(blockchain_t const *blockchain, char const *path);
 blockchain_t *blockchain_deserialize(char const *path);
 llist_t *deserialize_blocks(int fd, uint32_t size, uint8_t endianness);
 int block_is_valid(block_t const *block, block_t const *prev_block);
-int hash_matches_difficulty(uint8_t const hash[SHA256_DIGEST_LENGTH], uint32_t difficulty);
+int hash_matches_difficulty(uint8_t const hash[SHA256_DIGEST_LENGTH],
+			    uint32_t difficulty);
 void block_mine(block_t *block);
 uint32_t blockchain_difficulty(blockchain_t const *blockchain);
 
