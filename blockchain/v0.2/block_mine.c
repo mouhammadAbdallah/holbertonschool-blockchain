@@ -10,11 +10,10 @@
  */
 void block_mine(block_t *block)
 {
-	uint64_t mynonce = 0;
-
-	do {
-		block->info.nonce = mynonce;
-		block_hash(block, block->hash);
-		mynonce++;
-	} while (hash_matches_difficulty(block->hash, block->info.difficulty) != 1);
+	if (!block)
+		return;
+	block->info.nonce = 0;
+	while (hash_matches_difficulty(block_hash(block, block->hash),
+				       block->info.difficulty) != 1)
+		block->info.nonce++;
 }

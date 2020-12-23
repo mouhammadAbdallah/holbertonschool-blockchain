@@ -13,14 +13,18 @@ int nbOfZinB(uint8_t nb);
 int hash_matches_difficulty(uint8_t const hash[SHA256_DIGEST_LENGTH],
 			    uint32_t difficulty)
 {
-	uint32_t i = 0, j = 0;
+	uint32_t i = 0, j = 0, k = 0;
 
 	if (!hash || difficulty > SHA256_DIGEST_LENGTH * 8)
 		return (0);
-	while (j < difficulty && nbOfZinB(hash[i]) != 0)
+	k = nbOfZinB(hash[i]);
+	while (j < difficulty && k != 0)
 	{
 		j += nbOfZinB(hash[i]);
 		i++;
+		if (k < 8)
+			break;
+		k = nbOfZinB(hash[i]);
 	}
 	if (j >= difficulty)
 		return (1);
