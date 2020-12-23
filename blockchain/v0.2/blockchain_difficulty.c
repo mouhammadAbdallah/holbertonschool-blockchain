@@ -21,7 +21,7 @@ uint32_t blockchain_difficulty(blockchain_t const *blockchain)
 						       llist_size(blockchain->chain) -
 							   DIFFICULTY_ADJUSTMENT_INTERVAL);
 		expTime = DIFFICULTY_ADJUSTMENT_INTERVAL * BLOCK_GENERATION_INTERVAL;
-		actTime = block->info.timestamp - lAblock->info.timestamp;
+		actTime = time(NULL) - lAblock->info.timestamp;
 		if (actTime < expTime / 2)
 			return (block->info.difficulty + 1);
 		if (actTime > expTime * 2)
