@@ -3,7 +3,7 @@
 int nbOfZinB(uint8_t nb);
 
 /**
- * hash_matches_difficulty - Write a function that checks
+ * hash_matches_difficulty - a function that checks
  * whether a given hash matches a given difficulty
  * @hash: the hash to check
  * @difficulty: the minimum difficulty the hash should match
