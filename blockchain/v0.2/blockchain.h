@@ -20,6 +20,11 @@
 #define HBLK_VERSION "0.2"
 #define CHECK_ENDIAN(x) (endianness ? SWAPENDIAN(x) : (void)0)
 
+//Defines how often (in seconds) a Block should be found
+#define BLOCK_GENERATION_INTERVAL 1
+//Defines how often (in Blocks) the difficulty should be adjusted
+#define DIFFICULTY_ADJUSTMENT_INTERVAL 5
+
 /**
  * struct blockchain_s - Blockchain structure
  *
@@ -99,5 +104,6 @@ llist_t *deserialize_blocks(int fd, uint32_t size, uint8_t endianness);
 int block_is_valid(block_t const *block, block_t const *prev_block);
 int hash_matches_difficulty(uint8_t const hash[SHA256_DIGEST_LENGTH], uint32_t difficulty);
 void block_mine(block_t *block);
+uint32_t blockchain_difficulty(blockchain_t const *blockchain);
 
 #endif /* _BLOCKCHAIN_H_ */
