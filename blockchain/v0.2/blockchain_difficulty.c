@@ -12,7 +12,11 @@ uint32_t blockchain_difficulty(blockchain_t const *blockchain)
 	block_t *block, *lAblock;
 	uint64_t expTime, actTime;
 
+	if (!blockchain)
+		return (0);
 	block = llist_get_tail(blockchain->chain);
+	if (!block)
+		return (0);
 	if (block->info.index % DIFFICULTY_ADJUSTMENT_INTERVAL == 0 &&
 	    block->info.index != 0)
 	{
