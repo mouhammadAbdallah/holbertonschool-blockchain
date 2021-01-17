@@ -3,7 +3,7 @@
 /**
  * transaction_destroy - frees tx structure
  * @transaction: tx struct to free
- * 
+ *
  * Void
  */
 void transaction_destroy(transaction_t *transaction)

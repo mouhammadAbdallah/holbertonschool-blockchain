@@ -11,21 +11,18 @@
  * Return: a pointer to an EC_KEY structure or NULL upon failure
  */
 block_t *block_create(block_t const *prev, int8_t const *data,
-		      uint32_t data_len)
+	uint32_t data_len)
 {
-	block_t *b;
+	block_t *block = calloc(1, sizeof(*block));
+	llist_t *transactions = llist_create(MT_SUPPORT_FALSE);
 
-	b = calloc(1, sizeof(*b));
-	if (b == NULL)
-		return (NULL);
-
-	b->info.index = prev->info.index + 1;
-	b->info.difficulty = 0;
-	b->info.timestamp = time(NULL);
-	b->info.nonce = 0;
-	memcpy(b->info.prev_hash, prev->hash, SHA256_DIGEST_LENGTH);
-	memcpy(b->data.buffer, data, data_len);
-	b->data.len = data_len;
-	memset(b->hash, 0, SHA256_DIGEST_LENGTH);
-	return (b);
+	if (!block || !transactions)
+		return (free(block), llist_destroy(transactions, 0, NULL), NULL);
+	memcpy(&(block->data.buffer), data, MIN(data_len, BLOCKCHAIN_DATA_MAX));
+	block->data.len = MIN(data_len, BLOCKCHAIN_DATA_MAX);
+	block->info.index = prev->info.index + 1;
+	block->info.timestamp = time(NULL);
+	block->transactions = transactions;
+	memcpy(&(block->info.prev_hash), prev->hash, SHA256_DIGEST_LENGTH);
+	return (block);
 }
