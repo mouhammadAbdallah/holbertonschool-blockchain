@@ -1,9 +1,7 @@
 #ifndef _TRANSACTION_H_
 #define _TRANSACTION_H_
 
-#include "../blockchain.h"
-
-#define COINBASE_AMOUNT 50
+#include "blockchain.h"
 
 
 /**

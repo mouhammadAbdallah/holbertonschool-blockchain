@@ -20,6 +20,7 @@
 #define HBLK_VERSION "0.3"
 #define CHECK_ENDIAN(x) (endianness ? SWAPENDIAN(x) : (void)0)
 
+#define COINBASE_AMOUNT 50
 /*Defines how often (in seconds) a Block should be found*/
 #define BLOCK_GENERATION_INTERVAL 1
 /*Defines how often (in Blocks) the difficulty should be adjusted-*/
