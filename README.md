@@ -10,8 +10,9 @@ created by: [Mohamad ABDALLAH](https://www.linkedin.com/in/m-abdallah/)
 This repository contains:
 
 * crypto
-* blockchain-v0.1
-* blockchain-v0.2
+* blockchain-v0.1: Data structures
+* blockchain-v0.2: Block mining 
+* blockchain-v0.3: Transactions
 
 optional projects:
 
