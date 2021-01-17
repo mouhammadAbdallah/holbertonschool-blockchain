@@ -1,11 +1,11 @@
 #include "blockchain.h"
 
 /**
- * blockchain_serialize - a function that serializes a Blockchain into a file
- * @blockchain: pointer to blockchain to be serialized
- * @path: the path to a file to serialize the Blockchain into
+ * blockchain_serialize - serializes blockchain to file
+ * @blockchain: pointer to blockchain to serialize
+ * @path: path to save file
  *
- * Return: 0 upon success, or -1 upon failure
+ * Return: 0 on success else -1 on failure
  */
 int blockchain_serialize(blockchain_t const *blockchain, char const *path)
 {
@@ -19,30 +19,28 @@ int blockchain_serialize(blockchain_t const *blockchain, char const *path)
 	if (fd == -1)
 		return (-1);
 	if (write(fd, HBLK_MAGIC, strlen(HBLK_MAGIC)) != strlen(HBLK_MAGIC))
-		goto end;
+		return (close(fd), -1);
 	if (write(fd, HBLK_VERSION, strlen(HBLK_VERSION)) != strlen(HBLK_VERSION))
-		goto end;
+		return (close(fd), -1);
 	if (write(fd, &endianness, 1) != 1)
-		goto end;
+		return (close(fd), -1);
 	if (write(fd, &size, 4) != 4)
-		goto end;
+		return (close(fd), -1);
 	for (i = 0; i < size; i++)
 	{
 		block_t *block = llist_get_node_at(blockchain->chain, i);
 
 		if (!block)
-			goto end;
+			return (close(fd), -1);
 		if (write(fd, &(block->info), sizeof(block->info)) != sizeof(block->info))
-			goto end;
+			return (close(fd), -1);
 		if (write(fd, &(block->data.len), 4) != 4)
-			goto end;
+			return (close(fd), -1);
 		if (write(fd, block->data.buffer, block->data.len) != block->data.len)
-			goto end;
+			return (close(fd), -1);
 		if (write(fd, block->hash, SHA256_DIGEST_LENGTH) !=
-		    SHA256_DIGEST_LENGTH)
-			goto end;
+			SHA256_DIGEST_LENGTH)
+			return (close(fd), -1);
 	}
 	return (close(fd), 0);
-end:
-	return (close(fd), -1);
 }
