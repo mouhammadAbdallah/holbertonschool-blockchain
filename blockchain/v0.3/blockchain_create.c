@@ -17,6 +17,7 @@ blockchain_t *blockchain_create(void)
 {
 	blockchain_t *bc;
 	block_t *genesis;
+	llist_t *unspent = llist_create(MT_SUPPORT_TRUE);
 
 	bc = calloc(1, sizeof(*bc));
 	if (bc == NULL)
@@ -49,5 +50,6 @@ blockchain_t *blockchain_create(void)
 		free(bc);
 		return (NULL);
 	}
+	bc->unspent = unspent;
 	return (bc);
 }
