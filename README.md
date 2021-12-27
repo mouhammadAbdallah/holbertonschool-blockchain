@@ -14,8 +14,5 @@ This repository contains:
 * blockchain-v0.2: Block mining 
 * blockchain-v0.3: Transactions
 
-optional projects:
-
-*
 
 
